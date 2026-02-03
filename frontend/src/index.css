@@ -6,67 +6,68 @@
 
 @layer base {
   :root {
-    /* Pharmadix Corporate Colors */
-    --background: 210 20% 98%;
-    --foreground: 0 0% 10%;
+    /* Pharmadix Corporate Colors - New Palette */
+    --background: 249 20% 96%; /* #f2f1f6 */
+    --foreground: 249 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 249 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 249 10% 10%;
 
-    /* Morado Pharmadix #410468 */
-    --primary: 278 91% 21%;
+    /* Gigas #493c8b */
+    --primary: 249 39% 39%;
     --primary-foreground: 0 0% 100%;
 
-    /* Azul Pharmadix #009FE3 */
-    --secondary: 197 100% 45%;
+    /* Lavender Purple #8981b3 */
+    --secondary: 251 30% 61%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Grises neutros */
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    /* Mischka #dcdae9 */
+    --muted: 249 25% 89%;
+    --muted-foreground: 249 10% 45%;
 
-    --accent: 278 91% 95%;
-    --accent-foreground: 278 91% 21%;
+    /* Accent - Blue Haze #c4c0d9 */
+    --accent: 249 25% 92%;
+    --accent-foreground: 249 39% 39%;
 
     /* Rojo/Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Verde Pharmadix #00A651 - Success/Entrada */
+    /* Verde Pharmadix - Success/Entrada */
     --success: 152 100% 32%;
     --success-foreground: 0 0% 100%;
 
-    /* Naranja Pharmadix #F15A29 - Warning/Salida */
+    /* Naranja Pharmadix - Warning/Salida */
     --warning: 15 88% 55%;
     --warning-foreground: 0 0% 100%;
 
-    /* Info - Azul */
-    --info: 197 100% 45%;
+    /* Info - Scampi #6b60a1 */
+    --info: 251 25% 50%;
     --info-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 278 91% 21%;
+    --border: 249 25% 89%;
+    --input: 249 25% 89%;
+    --ring: 249 39% 39%;
 
     --radius: 0.625rem;
 
     /* Sidebar */
-    --sidebar-background: 278 91% 21%;
+    --sidebar-background: 249 39% 39%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 278 91% 21%;
-    --sidebar-accent: 278 70% 30%;
+    --sidebar-primary-foreground: 249 39% 39%;
+    --sidebar-accent: 251 30% 61%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 278 70% 30%;
+    --sidebar-border: 249 25% 80%;
     --sidebar-ring: 0 0% 100%;
 
     /* Custom Pharmadix tokens */
     --header-height: 64px;
-    --pharmadix-purple: 278 91% 21%;
-    --pharmadix-blue: 197 100% 45%;
+    --pharmadix-purple: 249 39% 39%;
+    --pharmadix-blue: 251 25% 50%;
     --pharmadix-green: 152 100% 32%;
     --pharmadix-orange: 15 88% 55%;
   }

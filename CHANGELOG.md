@@ -7,6 +7,9 @@ Todas las modificaciones notables a este proyecto serán documentadas en este ar
 ### Añadido (Raíz)
 - **README.md:** Creación de un archivo de guía principal del proyecto con instrucciones de instalación y estructura.
 
+### Modificado (Global)
+- **Nueva Identidad Visual:** Actualización de la paleta de colores corporativa en todo el sistema (Web y Documentación) utilizando tonos Gigas, Minsk y Lavender Purple.
+
 ### Corregido (Frontend)
 - **NuevaHoja.tsx:** Se corrigió un error de importación que causaba una pantalla en blanco (ReferenceError: Badge is not defined) al intentar buscar lotes.
 - **Flujo de Navegación:** Estabilidad mejorada en el flujo de creación de hojas de tiempo.
