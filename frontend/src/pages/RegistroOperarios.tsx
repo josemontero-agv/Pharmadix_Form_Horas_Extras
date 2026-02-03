@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Header } from '@/components/layout/Header';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Button } from '@/components/ui/button';
@@ -11,22 +11,16 @@ import { QrScannerModal } from '@/components/operators/QrScannerModal';
 import { SignatureModal } from '@/components/signature/SignatureModal';
 import { ConnectionStatus, Empleado, RegistroTiempo, Lote, HojaTiempo } from '@/types/pharmadix';
 import { empleados, actividades } from '@/data/mockData';
-import { QrCode, Search, Clock, Users, FileCheck, AlertTriangle } from 'lucide-react';
+import { QrCode, Search, Clock, Users, FileCheck, AlertTriangle, Save } from 'lucide-react';
 import { toast } from 'sonner';
-
-interface HojaTemp {
-  lote: Lote;
-  proceso: string;
-  area: string;
-  cantidadOrdenada: string;
-  turno: string;
-  fechaInicio: string;
-}
 
 export default function RegistroOperarios() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const hojaId = searchParams.get('id');
+  
   const [connectionStatus] = useState<ConnectionStatus>('online');
-  const [hojaTemp, setHojaTemp] = useState<HojaTemp | null>(null);
+  const [hoja, setHoja] = useState<HojaTiempo | null>(null);
   const [registros, setRegistros] = useState<RegistroTiempo[]>([]);
   
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -37,14 +31,43 @@ export default function RegistroOperarios() {
   const [selectedEmpleado, setSelectedEmpleado] = useState<Empleado | null>(null);
   const [selectedRegistro, setSelectedRegistro] = useState<RegistroTiempo | null>(null);
 
+  // Cargar la hoja desde el ID
   useEffect(() => {
-    const stored = localStorage.getItem('pharmadix_hoja_temp');
-    if (stored) {
-      setHojaTemp(JSON.parse(stored));
-    } else {
-      navigate('/nueva-hoja');
+    if (!hojaId) {
+      navigate('/dashboard');
+      return;
     }
-  }, [navigate]);
+
+    const storedHojas = localStorage.getItem('pharmadix_hojas');
+    if (storedHojas) {
+      const hojas: HojaTiempo[] = JSON.parse(storedHojas);
+      const foundHoja = hojas.find((h) => h.id === hojaId);
+      if (foundHoja) {
+        setHoja(foundHoja);
+        setRegistros(foundHoja.registros);
+      } else {
+        toast.error('Hoja no encontrada');
+        navigate('/dashboard');
+      }
+    }
+  }, [hojaId, navigate]);
+
+  // Función para guardar cambios parciales (Auto-save)
+  const saveChanges = useCallback((nuevosRegistros: RegistroTiempo[]) => {
+    if (!hojaId) return;
+    
+    const storedHojas = localStorage.getItem('pharmadix_hojas');
+    if (storedHojas) {
+      const hojas: HojaTiempo[] = JSON.parse(storedHojas);
+      const updatedHojas = hojas.map((h) => {
+        if (h.id === hojaId) {
+          return { ...h, registros: nuevosRegistros };
+        }
+        return h;
+      });
+      localStorage.setItem('pharmadix_hojas', JSON.stringify(updatedHojas));
+    }
+  }, [hojaId]);
 
   const registeredIds = registros.map((r) => r.empleadoId);
 
@@ -56,8 +79,6 @@ export default function RegistroOperarios() {
   };
 
   const handleQrScan = (decodedText: string) => {
-    // Buscar empleado por ID o Gafete (dependiendo de qué contenga el QR)
-    // Según los ejemplos del usuario, el QR tiene formato "EMP-001" o "EMP-jperez"
     const empleado = empleados.find((e) => e.id === decodedText || e.gafete === decodedText);
     
     if (empleado) {
@@ -82,7 +103,9 @@ export default function RegistroOperarios() {
       estado: 'EN_PROCESO',
     };
 
-    setRegistros([...registros, nuevoRegistro]);
+    const nuevosRegistros = [...registros, nuevoRegistro];
+    setRegistros(nuevosRegistros);
+    saveChanges(nuevosRegistros);
     toast.success('Entrada registrada correctamente');
   };
 
@@ -90,25 +113,26 @@ export default function RegistroOperarios() {
     const now = new Date();
     const horaSalida = now.toTimeString().substring(0, 8);
     
-    setRegistros(
-      registros.map((r) => {
-        if (r.id === registroId) {
-          const [hE, mE] = r.horaEntrada!.split(':').map(Number);
-          const [hS, mS] = horaSalida.split(':').map(Number);
-          const minutosEntrada = hE * 60 + mE;
-          const minutosSalida = hS * 60 + mS;
-          const horasTotales = (minutosSalida - minutosEntrada) / 60;
+    const nuevosRegistros = registros.map((r) => {
+      if (r.id === registroId) {
+        const [hE, mE] = r.horaEntrada!.split(':').map(Number);
+        const [hS, mS] = horaSalida.split(':').map(Number);
+        const minutosEntrada = hE * 60 + mE;
+        const minutosSalida = hS * 60 + mS;
+        const horasTotales = (minutosSalida - minutosEntrada) / 60;
 
-          return {
-            ...r,
-            horaSalida,
-            horasTotales: Math.max(0, horasTotales),
-            estado: 'FINALIZADO' as const,
-          };
-        }
-        return r;
-      })
-    );
+        return {
+          ...r,
+          horaSalida,
+          horasTotales: Math.max(0, horasTotales),
+          estado: 'FINALIZADO' as const,
+        };
+      }
+      return r;
+    });
+
+    setRegistros(nuevosRegistros);
+    saveChanges(nuevosRegistros);
     toast.success('Salida registrada correctamente');
   };
 
@@ -137,30 +161,24 @@ export default function RegistroOperarios() {
   };
 
   const handleSignatureConfirm = (signatureData: string) => {
-    if (!hojaTemp) return;
+    if (!hojaId) return;
 
-    const nuevaHoja: HojaTiempo = {
-      id: `HOJA-${Date.now()}`,
-      numeroHoja: 1,
-      loteId: hojaTemp.lote.id,
-      lote: hojaTemp.lote,
-      tomadorId: 'USER-001',
-      fechaEmision: new Date().toISOString().split('T')[0],
-      turno: hojaTemp.turno as 'MAÑANA' | 'TARDE' | 'NOCHE',
-      estado: 'CERRADA',
-      registros,
-      firmaBase64: signatureData,
-      sincronizada: false,
-    };
-
-    // Guardar en localStorage
     const storedHojas = localStorage.getItem('pharmadix_hojas');
-    const hojas: HojaTiempo[] = storedHojas ? JSON.parse(storedHojas) : [];
-    hojas.push(nuevaHoja);
-    localStorage.setItem('pharmadix_hojas', JSON.stringify(hojas));
-
-    // Limpiar hoja temporal
-    localStorage.removeItem('pharmadix_hoja_temp');
+    if (storedHojas) {
+      const hojas: HojaTiempo[] = JSON.parse(storedHojas);
+      const updatedHojas = hojas.map((h) => {
+        if (h.id === hojaId) {
+          return {
+            ...h,
+            estado: 'CERRADA' as const,
+            firmaBase64: signatureData,
+            registros,
+          };
+        }
+        return h;
+      });
+      localStorage.setItem('pharmadix_hojas', JSON.stringify(updatedHojas));
+    }
 
     toast.success('Hoja cerrada y enviada correctamente');
     setSignatureModalOpen(false);
@@ -171,22 +189,14 @@ export default function RegistroOperarios() {
   const finalizados = registros.filter((r) => r.estado === 'FINALIZADO').length;
   const enProceso = registros.filter((r) => r.estado === 'EN_PROCESO').length;
 
-  if (!hojaTemp) return null;
+  if (!hoja) return null;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header
-        title={`Lote #${hojaTemp.lote.numero}`}
+        title={`Lote #${hoja.lote?.numero}`}
         showBack
-        onBack={() => {
-          if (registros.length > 0) {
-            if (confirm('¿Desea abandonar esta hoja? Los cambios no guardados se perderán.')) {
-              navigate('/dashboard');
-            }
-          } else {
-            navigate('/dashboard');
-          }
-        }}
+        onBack={() => navigate('/dashboard')}
         connectionStatus={connectionStatus}
       />
 
@@ -195,7 +205,7 @@ export default function RegistroOperarios() {
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-muted-foreground" />
-            <span className="font-medium">{hojaTemp.lote.producto}</span>
+            <span className="font-medium">{hoja.lote?.producto}</span>
           </div>
           <div className="flex items-center gap-3">
             <Badge variant="open" className="gap-1">
@@ -213,6 +223,17 @@ export default function RegistroOperarios() {
       </div>
 
       <PageContainer className="flex flex-col gap-4 pb-safe-bottom">
+        {/* Active Banner */}
+        <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 flex items-start gap-3">
+          <div className="bg-blue-100 p-2 rounded-full">
+            <Save className="h-4 w-4 text-blue-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-blue-900">Estado: Borrador</p>
+            <p className="text-xs text-blue-700">Los cambios se guardan automáticamente. Puedes salir y volver más tarde.</p>
+          </div>
+        </div>
+
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <Button
@@ -272,12 +293,12 @@ export default function RegistroOperarios() {
         {/* Close Sheet Button */}
         <Button
           size="action"
-          className="w-full mt-4"
+          className="w-full mt-4 bg-pharmadix-purple hover:bg-pharmadix-purple/90"
           onClick={handleCerrarHoja}
           disabled={registros.length === 0}
         >
           <FileCheck className="h-6 w-6" />
-          Cerrar Hoja
+          Finalizar y Cerrar Hoja
         </Button>
       </PageContainer>
 

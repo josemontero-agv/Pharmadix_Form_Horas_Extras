@@ -4,16 +4,12 @@ Todas las modificaciones notables a este proyecto serán documentadas en este ar
 
 ## [2.2.0] - 2026-02-03
 
-### Añadido (Frontend)
-- **Identidad Visual:** Integración del logo oficial de Pharmadix en el portal, encabezados y como favicon.
-- **Funcionalidad de Escaneo QR:** Implementación del escaneo de códigos QR para identificación de operarios.
-- **Validación de Lotes:** El sistema ahora valida visualmente si un lote está ABIERTO o CERRADO antes de permitir registros.
-- **Centro de Documentación Web:** Creación de un portal interactivo en HTML con manuales de usuario, desarrollador, flujos de procesos e informes ejecutivos, optimizado para exportación a PDF.
+### Añadido (Raíz)
+- **README.md:** Creación de un archivo de guía principal del proyecto con instrucciones de instalación y estructura.
 
-### Mejorado (Frontend)
-- **Robustez del MVP:** Reorganización de la estructura del proyecto a una carpeta `frontend/` y mejoras en la persistencia de datos local.
-- **Seguridad de Cámara:** Validación de contexto seguro (HTTPS/Localhost) en el escáner QR.
-- **Experiencia de Usuario:** Botón flotante de exportación a PDF en toda la documentación para facilitar la entrega de reportes.
+### Corregido (Frontend)
+- **NuevaHoja.tsx:** Se corrigió un error de importación que causaba una pantalla en blanco (ReferenceError: Badge is not defined) al intentar buscar lotes.
+- **Flujo de Navegación:** Estabilidad mejorada en el flujo de creación de hojas de tiempo.
 
 ### Mejorado (Frontend)
 - **Página de Registro de Operarios:** Integración del botón "Escanear QR" con el nuevo sistema de escaneo automático.

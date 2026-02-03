@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { ConnectionStatus, Lote, Turno } from '@/types/pharmadix';
 import { lotes, procesos, areas, turnos } from '@/data/mockData';
 import { Package, ArrowRight, Search, AlertCircle, CheckCircle2 } from 'lucide-react';
@@ -65,15 +66,29 @@ export default function NuevaHoja() {
       return;
     }
 
-    // Guardar datos de la hoja temporal
-    const hojaTemp = {
+    // Crear nueva hoja en estado BORRADOR
+    const nuevaHoja: HojaTiempo = {
+      id: `HOJA-${Date.now()}`,
+      numeroHoja: Math.floor(Math.random() * 1000), // Temporal
+      loteId: selectedLote.id,
       lote: selectedLote,
-      ...formData,
-      fechaInicio: new Date().toISOString(),
+      tomadorId: 'USER-001', // Harcodeado por ahora
+      fechaEmision: new Date().toISOString().split('T')[0],
+      turno: formData.turno as Turno,
+      estado: 'BORRADOR',
+      registros: [],
+      firmaBase64: null,
+      sincronizada: false,
     };
-    localStorage.setItem('pharmadix_hoja_temp', JSON.stringify(hojaTemp));
+
+    // Guardar en el listado principal de hojas
+    const storedHojas = localStorage.getItem('pharmadix_hojas');
+    const hojas: HojaTiempo[] = storedHojas ? JSON.parse(storedHojas) : [];
+    hojas.push(nuevaHoja);
+    localStorage.setItem('pharmadix_hojas', JSON.stringify(hojas));
     
-    navigate('/registro-operarios');
+    // Navegar con el ID de la hoja
+    navigate(`/registro-operarios?id=${nuevaHoja.id}`);
   };
 
   const isLoteCerrado = selectedLote?.estado === 'CERRADO';

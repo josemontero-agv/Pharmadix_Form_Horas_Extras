@@ -42,13 +42,12 @@
             <h2>1. Inicio de Sesión e Ingreso de Lote</h2>
             <p>El Tomador de Tiempos registra los datos completos del lote al iniciar el turno para establecer el contexto de trabajo.</p>
             <div class="note">
-                <strong>Flujo de Datos:</strong> Al ingresar el número de lote, el Service Worker busca en la caché (IndexedDB). Si existe, recupera automáticamente el producto, presentación y área.
+                <strong>Modo Borrador:</strong> Al confirmar los datos iniciales, se crea una hoja en estado <strong>BORRADOR</strong>. Esto permite al usuario salir de la aplicación y regresar más tarde sin perder el progreso.
             </div>
             <ol>
                 <li><strong>Acceso:</strong> TT ingresa sus credenciales en la PWA.</li>
                 <li><strong>Apertura de Hoja:</strong> Se ingresa el número de lote (manual o escaneo).</li>
-                <li><strong>Validación de Lote:</strong> El sistema verifica si el lote es nuevo o existente para evitar duplicidad de datos.</li>
-                <li><strong>Configuración:</strong> TT selecciona proceso, área y cantidad ordenada si es un registro nuevo.</li>
+                <li><strong>Auto-save:</strong> El sistema guarda la hoja inmediatamente en el listado de "Hojas en Proceso".</li>
             </ol>
         </section>
 

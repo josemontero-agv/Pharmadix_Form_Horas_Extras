@@ -45,6 +45,15 @@ export default function MisHojas() {
     });
   };
 
+  const handleHojaClick = (hoja: HojaTiempo) => {
+    if (hoja.estado === 'BORRADOR') {
+      navigate(`/registro-operarios?id=${hoja.id}`);
+    } else {
+      // Por ahora no tenemos vista de detalle para cerradas, pero podrías añadirla
+      toast.info(`Hoja ${hoja.id} está cerrada`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header
@@ -73,8 +82,10 @@ export default function MisHojas() {
                 key={hoja.id}
                 className={cn(
                   'cursor-pointer transition-all hover:shadow-md',
-                  !hoja.sincronizada && 'border-warning/50'
+                  !hoja.sincronizada && hoja.estado === 'CERRADA' && 'border-warning/50',
+                  hoja.estado === 'BORRADOR' && 'border-blue-200 bg-blue-50/30'
                 )}
+                onClick={() => handleHojaClick(hoja)}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
