@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Procesos - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-diagram-2"></i> Flujo</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html" class="active"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-diagram-2-fill"></i> Flujo de Procesos v2.0</h1>
+        <p>Sintetiza la operación digital del sistema bajo la arquitectura PWA.</p>
+
+        <section id="actores">
+            <h2>Actores y Sistemas</h2>
+            <ul>
+                <li><strong>Tomador de Tiempos:</strong> Operario encargado de registrar los tiempos de su equipo (10-20 personas).</li>
+                <li><strong>PWA Frontend:</strong> Aplicación web profesional con capacidades offline.</li>
+                <li><strong>Service Worker:</strong> Componente que gestiona la caché y sincronización en segundo plano.</li>
+                <li><strong>Backend API:</strong> API de alto rendimiento (Fastify/Node.js).</li>
+                <li><strong>Base de Datos:</strong> PostgreSQL 15+.</li>
+            </ul>
+        </section>
+
+        <section id="inicio-lote">
+            <h2>1. Inicio de Sesión e Ingreso de Lote</h2>
+            <p>El Tomador de Tiempos registra los datos completos del lote al iniciar el turno para establecer el contexto de trabajo.</p>
+            <div class="note">
+                <strong>Flujo de Datos:</strong> Al ingresar el número de lote, el Service Worker busca en la caché (IndexedDB). Si existe, recupera automáticamente el producto, presentación y área.
+            </div>
+            <ol>
+                <li><strong>Acceso:</strong> TT ingresa sus credenciales en la PWA.</li>
+                <li><strong>Apertura de Hoja:</strong> Se ingresa el número de lote (manual o escaneo).</li>
+                <li><strong>Validación de Lote:</strong> El sistema verifica si el lote es nuevo o existente para evitar duplicidad de datos.</li>
+                <li><strong>Configuración:</strong> TT selecciona proceso, área y cantidad ordenada si es un registro nuevo.</li>
+            </ol>
+        </section>
+
+        <section id="registro-operarios">
+            <h2>2. Registro Masivo con Validación de Estado</h2>
+            <p>El sistema gestiona inteligentemente las transiciones de estado de cada operario para asegurar que el cálculo de horas sea exacto.</p>
+            <div class="card-grid">
+                <div class="card" style="border-top: 4px solid var(--pharmadix-green);">
+                    <h3>Estado: PENDIENTE</h3>
+                    <p>Muestra botón <strong>"ENTRADA"</strong>. Al hacer clic, se guarda la hora de inicio exacta.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--pharmadix-orange);">
+                    <h3>Estado: EN PROCESO</h3>
+                    <p>Muestra botón <strong>"SALIDA"</strong>. Al hacer clic, se guarda la hora de fin y se calcula el total.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #999;">
+                    <h3>Estado: FINALIZADO</h3>
+                    <p>Muestra un resumen de solo lectura. No permite más modificaciones para asegurar la integridad.</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Cada interacción actualiza inmediatamente la base de datos local (IndexedDB) para evitar pérdida de información ante cierres inesperados del navegador.</p>
+        </section>
+
+        <section id="cierre-firma">
+            <h2>3. Cierre con Doble Confirmación (Workflow)</h2>
+            <p>Garantiza que la información enviada al backend ha sido revisada por las partes interesadas.</p>
+            <div class="note">
+                <strong>Integridad ALCOA+:</strong> Cada firma digital vincula el ID del usuario, timestamp, IP y dispositivo utilizado.
+            </div>
+            <ul>
+                <li><strong>Paso 1: Cierre Operativo (TT):</strong> El Tomador revisa los totales de todos los operarios, firma digitalmente en la tablet y envía la hoja. El estado cambia a <code>POR_APROBAR</code>.</li>
+                <li><strong>Paso 2: Aprobación Administrativa (Jefe):</strong> El Jefe de Manufactura accede al Dashboard, revisa los detalles de la hoja #12345, firma y aprueba. El estado final es <code>APROBADA</code>.</li>
+            </ul>
+        </section>
+
+        <section id="online-offline">
+            <h2>Mecanismo de Sincronización</h2>
+            <p>La arquitectura "Offline-First" permite trabajar en zonas de baja cobertura dentro de la planta.</p>
+            <ol>
+                <li><strong>Captura:</strong> Los datos se guardan siempre primero en IndexedDB.</li>
+                <li><strong>Detección de Red:</strong> El Service Worker monitorea constantemente la conexión.</li>
+                <li><strong>Sincronización:</strong> Al detectar señal, los registros pendientes se envían en lotes a la API.</li>
+                <li><strong>Confirmación:</strong> El servidor valida, guarda en PostgreSQL y devuelve la confirmación de éxito.</li>
+            </ol>
+        </section>
+
+        <section id="online-offline">
+            <h2>Sincronización de Datos</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <i class="bi bi-wifi"></i>
+                    <h3>Online</h3>
+                    <p>Envío inmediato vía API y confirmación en tiempo real.</p>
+                </div>
+                <div class="card">
+                    <i class="bi bi-wifi-off"></i>
+                    <h3>Offline</h3>
+                    <p>Guardado en IndexedDB local y sincronización automática al recuperar red.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Flujo de Procesos Digitales</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura Técnica - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-diagram-3"></i> Arquitectura</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html" class="active"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-diagram-3"></i> Arquitectura Técnica v2.0</h1>
+        <p>Especificaciones detalladas de la infraestructura y lógica del sistema Pharmadix Times.</p>
+
+        <section id="sistemas">
+            <h2>Arquitectura de Sistemas</h2>
+            <p>El sistema se basa en una arquitectura de <strong>Monolito Modular Moderno</strong>, optimizado para tablets mediante una PWA (Progressive Web App).</p>
+            <div class="note">
+                <strong>Flujo de Datos:</strong> Los dispositivos en planta acceden vía HTTPS. El Service Worker gestiona la caché y la sincronización con IndexedDB antes de enviar peticiones al Backend.
+            </div>
+            <ul>
+                <li><strong>Frontend:</strong> PWA React + Vite + shadcn/ui.</li>
+                <li><strong>Backend:</strong> Node.js API (Fastify) con Prisma ORM.</li>
+                <li><strong>DB:</strong> PostgreSQL 15+ para persistencia relacional y auditoría.</li>
+            </ul>
+        </section>
+
+        <section id="datos">
+            <h2>Modelo de Datos y Auditoría</h2>
+            <p>Se implementan campos críticos para el cumplimiento <strong>ALCOA+</strong>:</p>
+            <ul>
+                <li><strong>Trazabilidad:</strong> Registro de User Agent, IP Address y timestamps de servidor vs cliente.</li>
+                <li><strong>Firmas:</strong> Almacenamiento de firmas digitales en Base64 vinculadas a cada hoja cerrada.</li>
+                <li><strong>Estados:</strong> Control secuencial de aprobación (Borrador -> Por Aprobar -> Aprobada).</li>
+            </ul>
+        </section>
+
+        <section id="offline">
+            <h2>Estrategia Offline-First</h2>
+            <ol>
+                <li><strong>Carga Local:</strong> Los recursos estáticos se sirven desde caché local vía Service Worker.</li>
+                <li><strong>Catálogos Offline:</strong> Sincronización de empleados y actividades al iniciar sesión.</li>
+                <li><strong>Resiliencia:</strong> Si la red falla, los turnos se guardan en el almacenamiento local del navegador y se reintentan enviar automáticamente al detectar señal.</li>
+            </ol>
+        </section>
+
+        <section id="ux">
+            <h2>Diseño UX para Planta</h2>
+            <ul>
+                <li><strong>QR Masivo:</strong> Botón de escaneo siempre accesible para identificación rápida.</li>
+                <li><strong>Validación Visual:</strong> Carga inmediata de la foto del operario para evitar suplantaciones.</li>
+                <li><strong>Táctil:</strong> Botones de 48px mínimo y contrastes altos para uso en entornos industriales.</li>
+            </ul>
+        </section>
+
+        <section id="maquina">
+            <h2>Lógica: Máquina de Estados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estado Inicial</th>
+                        <th>Evento / Acción</th>
+                        <th>Estado Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>PENDIENTE</code></td>
+                        <td>Registro de Entrada</td>
+                        <td><code>EN_PROCESO</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>EN_PROCESO</code></td>
+                        <td>Registro de Salida</td>
+                        <td><code>FINALIZADO</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Arquitectura de Software</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

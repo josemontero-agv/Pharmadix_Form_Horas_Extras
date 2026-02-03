@@ -94,6 +94,13 @@ Para evitar inconsistencias en el registro de tiempos, el Backend y Frontend imp
 
 Esto impide registrar salida sin entrada previa o duplicar registros.
 
+## 7. Estado Actual del MVP
+La implementación actual del MVP incluye:
+- **Frontend**: Desarrollado en React 18 con Vite, utilizando Tailwind CSS para estilos y Lucide para iconos.
+- **Escaneo**: Integración exitosa de la librería `html5-qrcode` para captura de códigos QR mediante cámara trasera.
+- **Identidad Visual**: Branding oficial de Pharmadix aplicado en colores institucionales (#410468) y logotipos.
+- **Persistencia**: Uso de `localStorage` para asegurar que los turnos en curso no se pierdan al recargar la página.
+
 ---
 **Documento Complementario al PDF Original**
-**Fecha:** 27 de Enero, 2026
+**Fecha Actualización:** 30 de Enero, 2026

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual del Desarrollador - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-code-square"></i> Dev Docs</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html" class="active"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-code-slash"></i> Manual del Desarrollador</h1>
+
+        <section id="stack">
+            <h2>Stack Tecnológico</h2>
+            <ul>
+                <li><strong>Frontend:</strong> React 18 + TypeScript + Vite.</li>
+                <li><strong>Estilos:</strong> Tailwind CSS + shadcn/ui.</li>
+                <li><strong>Iconografía:</strong> Lucide React.</li>
+                <li><strong>Escaneo QR:</strong> html5-qrcode.</li>
+                <li><strong>Persistencia Local:</strong> Browser LocalStorage (preparado para migration a Dexie.js).</li>
+            </ul>
+        </section>
+
+        <section id="estructura">
+            <h2>Estructura del Proyecto</h2>
+            <pre><code>frontend/
+├── src/
+│   ├── components/       # Componentes reutilizables
+│   │   ├── layout/       # Header, PageContainer
+│   │   ├── operators/    # QrScannerModal, OperatorCard
+│   │   └── ui/           # Componentes de shadcn
+│   ├── data/             # mockData.ts (Data maestra)
+│   ├── pages/            # Pantallas (Login, Dashboard, etc.)
+│   ├── types/            # Interfaces TypeScript
+│   └── App.tsx           # Rutas y Provider
+└── public/               # Activos estáticos (logo, favicon)</code></pre>
+        </section>
+
+        <section id="configuracion">
+            <h2>Configuración del Entorno</h2>
+            <ol>
+                <li>Instalar dependencias: <code>npm install</code></li>
+                <li>Iniciar servidor: <code>npm run dev</code></li>
+                <li>Acceso: <code>http://localhost:8080</code></li>
+            </ol>
+        </section>
+
+        <section id="logica">
+            <h2>Lógica de Máquina de Estados</h2>
+            <p>El flujo de cada operario en <code>RegistroOperarios.tsx</code>:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Significado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>PENDIENTE</code></td>
+                        <td>Operario identificado pero sin hora de entrada.</td>
+                    </tr>
+                    <tr>
+                        <td><code>EN_PROCESO</code></td>
+                        <td>Entrada registrada, laborando activamente.</td>
+                    </tr>
+                    <tr>
+                        <td><code>FINALIZADO</code></td>
+                        <td>Entrada y salida marcadas, horas totales calculadas.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="qr">
+            <h2>Integración del Escáner QR</h2>
+            <p>El componente <code>QrScannerModal.tsx</code> maneja el acceso directo al hardware:</p>
+            <div class="note">
+                <strong>Clave Técnica:</strong> Se implementó un delay de 300ms antes de llamar a <code>start()</code> para asegurar que el modal haya cargado el elemento del DOM.
+            </div>
+            <pre><code>await scannerRef.current.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    onScanSuccess
+);</code></pre>
+        </section>
+
+        <section id="roadmap">
+            <h2>Hoja de Ruta (Roadmap)</h2>
+            <ol>
+                <li><strong>Migración Backend:</strong> Reemplazar mocks con API REST en Fastify.</li>
+                <li><strong>Cola de Sincronización:</strong> Implementar envío batch de hojas en segundo plano.</li>
+                <li><strong>Optimización IndexedDB:</strong> Para manejo de grandes volúmenes de data offline.</li>
+            </ol>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Documentación de Ingeniería</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

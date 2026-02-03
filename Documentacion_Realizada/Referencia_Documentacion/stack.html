@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Tecnológico - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-stack"></i> Stack</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html" class="active"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-layers"></i> Stack Tecnológico v2.0</h1>
+        <p>Selección de herramientas para una arquitectura escalable, segura y offline-first.</p>
+
+        <section id="justificacion">
+            <h2>Justificación de la Arquitectura PWA</h2>
+            <p>Se ha seleccionado el modelo PWA por su despliegue instantáneo, bajo costo de mantenimiento y excelentes capacidades offline mediante Service Workers.</p>
+        </section>
+
+        <section id="comparativa">
+            <h2>Comparativa Tecnológica</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterio</th>
+                        <th>PWA (Seleccionado)</th>
+                        <th>Nativo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tiempo Desarrollo</td>
+                        <td>Bajo (3 meses)</td>
+                        <td>Alto (6+ meses)</td>
+                    </tr>
+                    <tr>
+                        <td>Costo Licencias</td>
+                        <td>$0</td>
+                        <td>$198/año</td>
+                    </tr>
+                    <tr>
+                        <td>Facilidad Uso</td>
+                        <td>Muy Alta (URL)</td>
+                        <td>Media (Tiendas)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="frontend">
+            <h2>Frontend (Captura en Planta)</h2>
+            <ul>
+                <li><strong>Framework:</strong> React 18 + TypeScript (Vite).</li>
+                <li><strong>Persistencia:</strong> Dexie.js (IndexedDB).</li>
+                <li><strong>Hardware:</strong> html5-qrcode para escaneo.</li>
+            </ul>
+        </section>
+
+        <section id="backend">
+            <h2>Backend (API REST)</h2>
+            <ul>
+                <li><strong>Runtime:</strong> Node.js (LTS).</li>
+                <li><strong>Framework:</strong> Fastify (Alto rendimiento).</li>
+                <li><strong>ORM:</strong> Prisma.</li>
+            </ul>
+        </section>
+
+        <section id="database">
+            <h2>Base de Datos</h2>
+            <p><strong>PostgreSQL 15+:</strong> Uso de JSONB para auditoría ALCOA+ e índices B-Tree para optimización de búsquedas.</p>
+        </section>
+
+        <section id="docker">
+            <h2>Estrategia de Despliegue</h2>
+            <p>Orquestación mediante <strong>Docker Compose</strong> para asegurar consistencia entre entornos de desarrollo, staging y producción.</p>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Especificación de Stack</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

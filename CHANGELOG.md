@@ -7,11 +7,13 @@ Todas las modificaciones notables a este proyecto serán documentadas en este ar
 ### Añadido (Frontend)
 - **Identidad Visual:** Integración del logo oficial de Pharmadix en el portal, encabezados y como favicon.
 - **Funcionalidad de Escaneo QR:** Implementación del escaneo de códigos QR para identificación de operarios.
-- **Componente QrScannerModal:** Nuevo modal que integra la cámara para detectar códigos QR de uniformes o gafetes.
-- **Librería html5-qrcode:** Añadida como dependencia para el manejo del escaneo en el navegador.
+- **Validación de Lotes:** El sistema ahora valida visualmente si un lote está ABIERTO o CERRADO antes de permitir registros.
+- **Centro de Documentación Web:** Creación de un portal interactivo en HTML con manuales de usuario, desarrollador, flujos de procesos e informes ejecutivos, optimizado para exportación a PDF.
 
-### Corregido (Frontend)
-- **Escáner QR:** Refactorización del componente QrScannerModal para usar Html5Qrcode directamente, mejorando el manejo de permisos de cámara y estados de error.
+### Mejorado (Frontend)
+- **Robustez del MVP:** Reorganización de la estructura del proyecto a una carpeta `frontend/` y mejoras en la persistencia de datos local.
+- **Seguridad de Cámara:** Validación de contexto seguro (HTTPS/Localhost) en el escáner QR.
+- **Experiencia de Usuario:** Botón flotante de exportación a PDF en toda la documentación para facilitar la entrega de reportes.
 
 ### Mejorado (Frontend)
 - **Página de Registro de Operarios:** Integración del botón "Escanear QR" con el nuevo sistema de escaneo automático.

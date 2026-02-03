@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-person-workspace"></i> Manual</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html" class="active"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-person-workspace"></i> Manual de Usuario</h1>
+
+        <section id="introduccion">
+            <h2>Introducción</h2>
+            <p>Pharmadix Times es una aplicación web progresiva (PWA) diseñada para digitalizar el registro de horas hombre en la planta de producción. Permite a los <strong>Tomadores de Tiempos</strong> registrar de manera rápida y precisa la entrada y salida de los operarios mediante el escaneo de códigos QR.</p>
+        </section>
+
+        <section id="guia-uso">
+            <h2>Guía de Uso Rápido</h2>
+            <h3>1. Inicio de Sesión</h3>
+            <ol>
+                <li>Ingrese su <strong>Usuario</strong> y <strong>Contraseña</strong>.</li>
+                <li>Presione el botón <strong>"Iniciar Sesión"</strong>.</li>
+            </ol>
+            <div class="note">
+                <strong>Importante:</strong> Verifique que el logo oficial de Pharmadix aparezca en la parte superior para asegurar que está en el entorno correcto.
+            </div>
+        </section>
+
+        <section id="crear-hoja">
+            <h2>Crear una Nueva Hoja</h2>
+            <ol>
+                <li>En el Dashboard, presione <strong>"Nueva Hoja"</strong>.</li>
+                <li><strong>Selección de Lote:</strong> Ingrese el número de lote. El sistema autocompletará el producto y presentación.</li>
+                <li>Seleccione el Proceso, Área y Turno correspondientes.</li>
+                <li>Presione <strong>"Continuar"</strong>.</li>
+            </ol>
+        </section>
+
+        <section id="uso-qr">
+            <h2>Uso del Escáner QR</h2>
+            <p>Una vez dentro de la hoja del lote:</p>
+            <ol>
+                <li>Presione el botón morado <strong>"Escanear QR"</strong>.</li>
+                <li>Permita el acceso a la cámara si el navegador lo solicita.</li>
+                <li>Apunte la cámara al código QR del uniforme o gafete del operario.</li>
+                <li>El sistema identificará al operario automáticamente y abrirá su ficha.</li>
+            </ol>
+        </section>
+
+        <section id="registro">
+            <h2>Registrar Entrada y Salida</h2>
+            <ul>
+                <li><strong>Entrada (Verde):</strong> Seleccione la actividad del catálogo y presione "REGISTRAR ENTRADA".</li>
+                <li><strong>Salida (Naranja):</strong> Cuando el operario termine, abra su ficha y presione "REGISTRAR SALIDA".</li>
+            </ul>
+            <p>El sistema calculará automáticamente las horas totales basándose en estos dos registros.</p>
+        </section>
+
+        <section id="cierre">
+            <h2>Cierre de Hoja</h2>
+            <ol>
+                <li>Verifique que todos los operarios tengan su registro en estado <strong>Finalizado</strong>.</li>
+                <li>Presione <strong>"Cerrar Hoja"</strong>.</li>
+                <li><strong>Firma Digital:</strong> Realice su firma en el panel táctil de la tablet.</li>
+                <li>Presione <strong>"Confirmar y Enviar"</strong>.</li>
+            </ol>
+        </section>
+
+        <section id="consejos">
+            <h2>Consejos y Soluciones</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <i class="bi bi-wifi-off"></i>
+                    <h3>Modo Offline</h3>
+                    <p>Si pierde internet, la app sigue funcionando. Los datos se sincronizarán al recuperar la red.</p>
+                </div>
+                <div class="card">
+                    <i class="bi bi-search"></i>
+                    <h3>Búsqueda Manual</h3>
+                    <p>Si el QR no se lee, use la búsqueda por nombre o número de gafete.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Manual del Tomador de Tiempos</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Documentación - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-folder2-open"></i> Docs</h2>
+        <ul>
+            <li><a href="index.html" class="active"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="hero">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo" style="max-width: 300px; margin-bottom: 20px; filter: brightness(0) invert(1);">
+            <h1>Pharmadix Times v2.0</h1>
+            <p>Portal Central de Documentación y Especificaciones del Proyecto</p>
+        </div>
+
+        <section id="vision">
+            <h2><i class="bi bi-eye"></i> Visión General</h2>
+            <p>Pharmadix Times moderniza el control de horas hombre en planta, reemplazando las tarjetas de cartón por una solución PWA segura, trazable y eficiente. Este portal contiene toda la documentación necesaria para usuarios finales, líderes de proyecto y desarrolladores.</p>
+            
+            <div class="card-grid">
+                <a href="manual_usuario.html" class="card">
+                    <i class="bi bi-person-workspace"></i>
+                    <h3>Manual de Usuario</h3>
+                    <p>Guía paso a paso para el Tomador de Tiempos en planta.</p>
+                </a>
+                <a href="flujo_procesos.html" class="card">
+                    <i class="bi bi-diagram-2"></i>
+                    <h3>Flujo de Procesos</h3>
+                    <p>Diagramas de secuencia y flujos de datos operativos.</p>
+                </a>
+                <a href="informe_ejecutivo.html" class="card">
+                    <i class="bi bi-file-earmark-bar-graph"></i>
+                    <h3>Informe Técnico</h3>
+                    <p>Propuesta estratégica y objetivos SMART de digitalización.</p>
+                </a>
+                <a href="arquitectura.html" class="card">
+                    <i class="bi bi-diagram-3"></i>
+                    <h3>Arquitectura v2.0</h3>
+                    <p>Diagramas de sistemas, modelo de datos y estrategia offline.</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="estado-mvp">
+            <h2><i class="bi bi-activity"></i> Estado Actual del MVP</h2>
+            <div class="note">
+                <strong>Estatus: Operativo.</strong> El prototipo funcional incluye escaneo de QR, identificación de operarios y persistencia local de turnos.
+            </div>
+            <ul>
+                <li>✅ <strong>Frontend:</strong> React 18 + Vite (Responsive para tablets).</li>
+                <li>✅ <strong>QR Engine:</strong> Integración exitosa con hardware de cámara.</li>
+                <li>✅ <strong>Branding:</strong> Identidad visual oficial de Pharmadix aplicada.</li>
+                <li>✅ <strong>Manuales:</strong> Documentación técnica y de usuario actualizada al 2026.</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Todos los derechos reservados.</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

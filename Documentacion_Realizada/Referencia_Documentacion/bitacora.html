@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora de Cambios - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-journal-text"></i> Bitácora</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html" class="active"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+            <li><a href="guia_git_main.html"><i class="bi bi-git"></i> Guía Git</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-journal-check"></i> Bitácora de Cambios</h1>
+        <p>Historial oficial de modificaciones y mejoras implementadas en el Sistema de Gestión de Tiempos Pharmadix.</p>
+
+        <section id="v2.2.0">
+            <h2>[2.2.0] - 2026-02-03</h2>
+            <span class="badge badge-success">Actual</span>
+            <h3>Añadido (Frontend)</h3>
+            <ul>
+                <li><strong>Funcionalidad de Escaneo QR:</strong> Implementación completa para identificación de operarios.</li>
+                <li><strong>Identidad Visual:</strong> Integración del logo oficial en portal, encabezados y favicon.</li>
+                <li><strong>Documentación Profesional:</strong> Creación de manuales en Markdown y HTML con exportación a PDF.</li>
+            </ul>
+            <h3>Mejorado</h3>
+            <ul>
+                <li><strong>Robustez del MVP:</strong> Reorganización a carpeta <code>frontend/</code> y mejoras en persistencia local.</li>
+                <li><strong>Validación de Lotes:</strong> Sistema visual de estados ABIERTO/CERRADO.</li>
+            </ul>
+        </section>
+
+        <section id="v2.1.0">
+            <h2>[2.1.0] - 2026-01-27</h2>
+            <h3>Mejorado (UX/UI)</h3>
+            <ul>
+                <li><strong>Ingreso de Lotes:</strong> Formulario unificado con campos obligatorios.</li>
+                <li><strong>Interfaz Inteligente:</strong> Botones contextuales de Entrada/Salida.</li>
+            </ul>
+            <h3>Añadido (Backend/DB)</h3>
+            <ul>
+                <li><strong>Doble Confirmación:</strong> Flujo de aprobación secuencial (Tomador y Jefe).</li>
+            </ul>
+        </section>
+
+        <section id="v2.0.0">
+            <h2>[2.0.0] - 2026-01-27</h2>
+            <h3>Modificado</h3>
+            <ul>
+                <li><strong>Arquitectura:</strong> Migración de App Nativa a PWA con React y TypeScript.</li>
+                <li><strong>Capacidad Offline:</strong> Implementación de Service Workers e IndexedDB.</li>
+            </ul>
+            <h3>Añadido</h3>
+            <ul>
+                <li><strong>Dockerización:</strong> Configuración completa de servicios vía Docker Compose.</li>
+                <li><strong>ALCOA+:</strong> Controles de auditoría digital integrados.</li>
+            </ul>
+        </section>
+
+        <section id="v1.0.0">
+            <h2>[1.0.0] - 2026-01-15</h2>
+            <p>Análisis inicial de requisitos, diseño de base de datos relacional y flujo AS-IS / TO-BE.</p>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Registro de Versiones</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

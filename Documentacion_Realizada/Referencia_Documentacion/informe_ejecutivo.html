@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Ejecutivo - Pharmadix Times</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="toc">
+        <div class="nav-logo">
+            <img src="assets/logo-pharmadix.png" alt="Pharmadix Logo">
+        </div>
+        <h2><i class="bi bi-file-earmark-bar-graph"></i> Informe</h2>
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+            <li><a href="manual_usuario.html"><i class="bi bi-person-workspace"></i> Manual Usuario</a></li>
+            <li><a href="manual_desarrollador.html"><i class="bi bi-code-slash"></i> Manual Dev</a></li>
+            <li><a href="flujo_procesos.html"><i class="bi bi-diagram-2"></i> Flujo Procesos</a></li>
+            <li><a href="arquitectura.html"><i class="bi bi-diagram-3"></i> Arquitectura</a></li>
+            <li><a href="informe_ejecutivo.html" class="active"><i class="bi bi-file-earmark-bar-graph"></i> Informe Técnico</a></li>
+            <li><a href="stack.html"><i class="bi bi-layers"></i> Stack</a></li>
+            <li><a href="bitacora.html"><i class="bi bi-journal-text"></i> Bitácora</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1><i class="bi bi-file-earmark-bar-graph-fill"></i> Informe Ejecutivo de Transformación Digital</h1>
+        <p>Propuesta estratégica para la digitalización del control de tiempos de producción.</p>
+
+        <section id="resumen">
+            <h2>Resumen Ejecutivo</h2>
+            <p>Pharmadix Corp. S.A. se encuentra en una fase de expansión crítica en capacidad productiva y terreno. Sin embargo, el proceso actual de control de horas hombre ("Tarjeta de Distribución de Tiempo") se mantiene manual, generando silos de datos y cuellos de botella administrativos.</p>
+            <p>Este proyecto propone la implementación de un ecosistema digital híbrido (App Móvil para planta + Web para administración) que eliminará el uso de papel, automatizará el cálculo de nómina/costos y proporcionará analítica en tiempo real, soportando el crecimiento proyectado de la compañía sin incrementar la carga administrativa proporcionalmente.</p>
+        </section>
+
+        <section id="analisis">
+            <h2>Análisis de Situación (AS-IS vs TO-BE)</h2>
+            <div class="card-grid">
+                <div class="card" style="border-left: 5px solid var(--pharmadix-orange);">
+                    <h3>Estado Actual (AS-IS)</h3>
+                    <ol style="text-align: left; margin-top: 15px;">
+                        <li><strong>Captura Manual:</strong> Riesgo de error e ilegibilidad en planta.</li>
+                        <li><strong>Silo Físico:</strong> La información viaja físicamente en papel.</li>
+                        <li><strong>Doble Trabajo:</strong> Transcripción manual a Excel diariamente.</li>
+                        <li><strong>Información Tardía:</strong> Datos con días de retraso para gerencia.</li>
+                    </ol>
+                </div>
+                <div class="card" style="border-left: 5px solid var(--pharmadix-green);">
+                    <h3>Estado Futuro (TO-BE)</h3>
+                    <ol style="text-align: left; margin-top: 15px;">
+                        <li><strong>Captura Digital:</strong> Escaneo QR para ingreso inmediato y validado.</li>
+                        <li><strong>Sincronización:</strong> Datos en tiempo real al servidor (u offline).</li>
+                        <li><strong>Cálculo Automático:</strong> Procesamiento de "calces" sin intervención humana.</li>
+                        <li><strong>Visibilidad Total:</strong> Dashboards en tiempo real de eficiencia y costos.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="objetivos">
+            <h2>Objetivos SMART e Impacto</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Objetivo SMART</th>
+                        <th>Impacto en Negocio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Eficiencia Operativa</strong></td>
+                        <td>Reducir el procesamiento de datos en un 100%.</td>
+                        <td>Liberación de recursos para tareas de valor.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rendimiento</strong></td>
+                        <td>Soportar 50 transacciones/seg con latencia < 200ms.</td>
+                        <td>Operatividad fluida en cambios de turno masivos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toma de Decisiones</strong></td>
+                        <td>Reportes de costos y eficiencia en < 10 segundos.</td>
+                        <td>Agilidad financiera y corrección inmediata de desviaciones.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integridad</strong></td>
+                        <td>Cumplimiento de principios ALCOA+ (Trazas digitales).</td>
+                        <td>Seguridad regulatoria y confianza en la data histórica.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="viabilidad">
+            <h2>Análisis de Viabilidad y Riesgos</h2>
+            <div class="note">
+                <strong>Estrategia de Mitigación:</strong> El proyecto se enfoca en un diseño UX/UI simplificado con botones grandes para vencer la resistencia cultural al cambio.
+            </div>
+            <ul>
+                <li><strong>Viabilidad Financiera:</strong> Bajo costo de desarrollo in-house. El retorno se ve en la eliminación de horas extras innecesarias por errores de cálculo.</li>
+                <li><strong>Gestión de Riesgos:</strong>
+                    <ul>
+                        <li><strong>Cultura:</strong> Capacitación in-situ y diseño simplificado.</li>
+                        <li><strong>Conectividad:</strong> Arquitectura "Offline-First" para operación continua.</li>
+                        <li><strong>Calidad del Dato:</strong> Validaciones en tiempo real (ej: no permitir iniciar en lote cerrado).</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="roadmap">
+            <h2>Hoja de Ruta (Roadmap) - 3 Meses</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <span style="font-size: 2rem; color: var(--pharmadix-purple);">01</span>
+                    <h3>Mes 1: Cimientos</h3>
+                    <p>Diseño de BD, Arquitectura Modular y Prototipo UI/UX.</p>
+                </div>
+                <div class="card">
+                    <span style="font-size: 2rem; color: var(--pharmadix-purple);">02</span>
+                    <h3>Mes 2: Desarrollo Core</h3>
+                    <p>Módulo de captura móvil (Offline/Online) y Panel Web.</p>
+                </div>
+                <div class="card">
+                    <span style="font-size: 2rem; color: var(--pharmadix-purple);">03</span>
+                    <h3>Mes 3: Estabilización</h3>
+                    <p>Pruebas de carga, Capacitación y Despliegue Piloto.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="alcance">
+            <h2>Alcance del MVP (MoSCoW)</h2>
+            <ul>
+                <li><strong>Must Have:</strong> App móvil táctil, Base de Datos centralizada, Escaneo QR, Cálculo automático.</li>
+                <li><strong>Should Have:</strong> Módulo de reportería Web, Exportación a Excel/PDF.</li>
+                <li><strong>Could Have:</strong> Integración con reloj biométrico.</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; color: var(--text-muted);">
+            <p>&copy; 2026 Pharmadix Corp. S.A. | Informe de Proyecto Digital</p>
+        </footer>
+    </main>
+
+    <button class="print-button" onclick="window.print()" title="Exportar a PDF">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+</body>
+</html>

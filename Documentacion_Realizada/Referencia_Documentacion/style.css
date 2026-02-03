@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+:root {
+    --pharmadix-purple: #410468;
+    --pharmadix-purple-dark: #2d034a;
+    --pharmadix-blue: #009FE3;
+    --pharmadix-green: #00A651;
+    --pharmadix-orange: #F15A29;
+    --text-primary: #1A1A1A;
+    --text-secondary: #555;
+    --bg-light: #f8f9fa;
+    --border-color: #e0e6ed;
+    --accent-color: #009FE3;
+    --code-bg: #2d2d2d;
+    --code-text: #f8f8f2;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    background-color: #fdfdff;
+    margin: 0;
+    display: flex;
+}
+
+#toc {
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: white;
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-logo {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.nav-logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+#toc h2 {
+    color: var(--pharmadix-purple);
+    font-size: 1.2rem;
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+#toc ul {
+    list-style: none;
+    padding: 0;
+}
+
+#toc li a {
+    display: block;
+    padding: 10px 15px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+#toc li a:hover, #toc li a.active {
+    background-color: var(--pharmadix-purple);
+    color: white;
+    transform: translateX(5px);
+}
+
+main {
+    margin-left: 280px;
+    padding: 40px;
+    max-width: 1000px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+section {
+    margin-bottom: 60px;
+    padding-top: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--pharmadix-purple);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--pharmadix-purple);
+    padding-bottom: 10px;
+    margin-top: 0;
+    color: var(--pharmadix-purple);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: var(--pharmadix-purple-dark);
+    margin-top: 30px;
+}
+
+h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-top: 25px;
+    border-left: 3px solid var(--pharmadix-blue);
+    padding-left: 10px;
+}
+
+code {
+    background-color: #e9ecef;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--pharmadix-orange);
+}
+
+pre {
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.note {
+    background-color: rgba(0, 159, 227, 0.1);
+    border-left: 5px solid var(--pharmadix-blue);
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.note strong {
+    color: var(--pharmadix-blue);
+}
+
+.bi {
+    margin-right: 8px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: var(--pharmadix-blue);
+}
+
+.card i {
+    font-size: 2.5rem;
+    color: var(--pharmadix-purple);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Home Styles */
+.hero {
+    background: linear-gradient(135deg, var(--pharmadix-purple) 0%, var(--pharmadix-purple-dark) 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.hero h1 {
+    color: white;
+    justify-content: center;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--bg-light);
+    color: var(--pharmadix-purple);
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #fcfcff;
+}
+
+/* Print Styles */
+@media print {
+    #toc, .print-button {
+        display: none !important;
+    }
+    main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    body {
+        background-color: white !important;
+    }
+    .section {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 40px !important;
+        page-break-inside: avoid;
+    }
+    .hero {
+        border-radius: 0 !important;
+        background: white !important;
+        color: var(--pharmadix-purple) !important;
+        padding: 20px 0 !important;
+        border-bottom: 2px solid var(--pharmadix-purple) !important;
+    }
+    .hero h1 {
+        color: var(--pharmadix-purple) !important;
+    }
+    .hero p {
+        color: var(--text-secondary) !important;
+    }
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+}
+
+.print-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--pharmadix-purple);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
+    z-index: 1000;
+}
+
+.print-button:hover {
+    transform: scale(1.1);
+    background-color: var(--pharmadix-purple-dark);
+}
