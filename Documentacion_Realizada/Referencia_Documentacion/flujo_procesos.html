@@ -24,6 +24,33 @@
         </ul>
     </nav>
     <main>
+        <section id="mapa-procesos">
+            <h2>Mapa de Procesos Pharmadix</h2>
+            <p>Visión macro del sistema de gestión de tiempos dentro de la cadena de valor de Pharmadix Corp. S.A.</p>
+            
+            <div class="mermaid">
+            graph LR
+                subgraph Estratégicos
+                    E1[Gerencia TI] --- E2[Planeamiento de Producción]
+                end
+                
+                subgraph Operativos
+                    O1[Apertura de Lote] --> O2[Captura Digital QR]
+                    O2 --> O3[Cierre Operativo]
+                    O3 --> O4[Validación Admin]
+                end
+                
+                subgraph Apoyo
+                    S1[Recursos Humanos] --- S2[Contabilidad/Nómina]
+                    S3[Auditoría Calidad ALCOA+] --- S2
+                end
+                
+                E2 -.-> Operativos
+                Operativos --> S2
+                Operativos -.-> S3
+            </div>
+        </section>
+
         <h1><i class="bi bi-diagram-2-fill"></i> Flujo de Procesos v2.0</h1>
         <p>Sintetiza la operación digital del sistema bajo la arquitectura PWA.</p>
 
@@ -41,19 +68,66 @@
         <section id="inicio-lote">
             <h2>1. Inicio de Sesión e Ingreso de Lote</h2>
             <p>El Tomador de Tiempos registra los datos completos del lote al iniciar el turno para establecer el contexto de trabajo.</p>
+            
+            <div class="mermaid">
+            sequenceDiagram
+                participant TT as Tomador de Tiempos
+                participant PWA as PWA App
+                participant SW as Service Worker
+                
+                TT->>PWA: Inicia Nueva Hoja
+                
+                rect rgb(242, 241, 246)
+                    Note over TT, PWA: Ingreso de Datos del Lote
+                    TT->>PWA: Ingresa/Escanea Número de Lote
+                    PWA->>SW: Busca Lote en Caché
+                    alt Lote Existente
+                        SW-->>PWA: Autocompleta Producto, Presentación, etc.
+                    else Nuevo Lote
+                        TT->>PWA: Selecciona Producto y Presentación
+                        TT->>PWA: Selecciona Proceso y Área
+                        TT->>PWA: Ingresa Cantidad Ordenada
+                    end
+                end
+                
+                TT->>PWA: Confirma creación de hoja
+            </div>
+
             <div class="note">
                 <strong>Modo Borrador:</strong> Al confirmar los datos iniciales, se crea una hoja en estado <strong>BORRADOR</strong>. Esto permite al usuario salir de la aplicación y regresar más tarde sin perder el progreso.
             </div>
-            <ol>
-                <li><strong>Acceso:</strong> TT ingresa sus credenciales en la PWA.</li>
-                <li><strong>Apertura de Hoja:</strong> Se ingresa el número de lote (manual o escaneo).</li>
-                <li><strong>Auto-save:</strong> El sistema guarda la hoja inmediatamente en el listado de "Hojas en Proceso".</li>
-            </ol>
         </section>
 
         <section id="registro-operarios">
             <h2>2. Registro Masivo con Validación de Estado</h2>
             <p>El sistema gestiona inteligentemente las transiciones de estado de cada operario para asegurar que el cálculo de horas sea exacto.</p>
+            
+            <div class="mermaid">
+            sequenceDiagram
+                participant TT as Tomador de Tiempos
+                participant PWA as PWA App
+                participant IDB as IndexedDB (Local)
+                
+                loop Por cada operario
+                    TT->>PWA: Identifica Operario (QR o Manual)
+                    PWA->>IDB: Consulta estado actual en esta hoja
+                    
+                    alt Estado: NO REGISTRADO
+                        IDB-->>PWA: Estado = PENDIENTE
+                        PWA-->>TT: Muestra Botón Verde "ENTRADA"
+                        TT->>PWA: Clic Entrada -> Guarda Hora Inicio
+                    else Estado: EN PROCESO
+                        IDB-->>PWA: Estado = EN_PROCESO
+                        PWA-->>TT: Muestra Botón Naranja "SALIDA"
+                        TT->>PWA: Clic Salida -> Guarda Hora Fin y Calcula Total
+                    else Estado: FINALIZADO
+                        PWA-->>TT: Muestra Resumen (Solo Lectura)
+                    end
+                    
+                    PWA->>IDB: Actualiza registro local
+                end
+            </div>
+
             <div class="card-grid">
                 <div class="card" style="border-top: 4px solid var(--pharmadix-green);">
                     <h3>Estado: PENDIENTE</h3>
@@ -68,30 +142,53 @@
                     <p>Muestra un resumen de solo lectura. No permite más modificaciones para asegurar la integridad.</p>
                 </div>
             </div>
-            <p style="margin-top: 20px;">Cada interacción actualiza inmediatamente la base de datos local (IndexedDB) para evitar pérdida de información ante cierres inesperados del navegador.</p>
         </section>
 
         <section id="cierre-firma">
             <h2>3. Cierre con Doble Confirmación (Workflow)</h2>
             <p>Garantiza que la información enviada al backend ha sido revisada por las partes interesadas.</p>
+            
+            <div class="mermaid">
+            sequenceDiagram
+                participant TT as Tomador de Tiempos
+                participant Jefe as Jefe Manufactura
+                participant PWA as PWA App
+                participant API as Backend API
+                participant DB as Base de Datos
+                
+                Note over TT, PWA: Paso 1: Cierre Operativo
+                TT->>PWA: Revisa totales y firma
+                PWA->>API: Envía hoja (Estado: POR_APROBAR)
+                API->>DB: INSERT HOJA
+                
+                Note over Jefe, API: Paso 2: Aprobación Administrativa
+                Jefe->>PWA: Accede a Dashboard Admin
+                PWA->>API: GET hojas pendientes
+                Jefe->>PWA: Revisa hoja #12345
+                Jefe->>PWA: Firma y Aprueba
+                PWA->>API: UPDATE estado = APROBADA
+                API->>DB: Commit final
+            </div>
+
             <div class="note">
                 <strong>Integridad ALCOA+:</strong> Cada firma digital vincula el ID del usuario, timestamp, IP y dispositivo utilizado.
             </div>
-            <ul>
-                <li><strong>Paso 1: Cierre Operativo (TT):</strong> El Tomador revisa los totales de todos los operarios, firma digitalmente en la tablet y envía la hoja. El estado cambia a <code>POR_APROBAR</code>.</li>
-                <li><strong>Paso 2: Aprobación Administrativa (Jefe):</strong> El Jefe de Manufactura accede al Dashboard, revisa los detalles de la hoja #12345, firma y aprueba. El estado final es <code>APROBADA</code>.</li>
-            </ul>
         </section>
 
-        <section id="online-offline">
+        <section id="online-offline-viz">
             <h2>Mecanismo de Sincronización</h2>
             <p>La arquitectura "Offline-First" permite trabajar en zonas de baja cobertura dentro de la planta.</p>
-            <ol>
-                <li><strong>Captura:</strong> Los datos se guardan siempre primero en IndexedDB.</li>
-                <li><strong>Detección de Red:</strong> El Service Worker monitorea constantemente la conexión.</li>
-                <li><strong>Sincronización:</strong> Al detectar señal, los registros pendientes se envían en lotes a la API.</li>
-                <li><strong>Confirmación:</strong> El servidor valida, guarda en PostgreSQL y devuelve la confirmación de éxito.</li>
-            </ol>
+            
+            <div class="mermaid">
+            flowchart TD
+                A[Captura de Datos en Tablet] --> B{¿Hay Internet?}
+                B -- Sí --> C[Envío inmediato vía API]
+                C --> D[Confirmación en Tiempo Real]
+                B -- No --> E[Guardar en IndexedDB]
+                E --> F[Service Worker detecta red]
+                F --> G[Sincronización en Segundo Plano]
+                G --> C
+            </div>
         </section>
 
         <section id="online-offline">
@@ -118,5 +215,48 @@
     <button class="print-button" onclick="window.print()" title="Exportar a PDF">
         <i class="bi bi-file-earmark-pdf"></i>
     </button>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#493c8b',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#403187',
+                lineColor: '#8981b3',
+                secondaryColor: '#f2f1f6',
+                tertiaryColor: '#dcdae9',
+                
+                // Colores de texto base
+                textColor: '#1A1A1A',
+                mainBkg: '#ffffff',
+                nodeTextColor: '#1A1A1A',
+                nodeBkg: '#ffffff',
+                clusterBkg: '#f2f1f6',
+                clusterBorder: '#dcdae9',
+                errorBkgColor: '#f8d7da',
+                errorTextColor: '#721c24',
+                
+                // Configuración específica para Diagramas de Secuencia
+                actorBkg: '#493c8b',
+                actorTextColor: '#ffffff',
+                actorBorder: '#403187',
+                
+                labelTextColor: '#1A1A1A',
+                loopTextColor: '#1A1A1A',
+                
+                noteBkgColor: '#fff3cd',
+                noteTextColor: '#493c8b',
+                noteBorderColor: '#ffeeba',
+                
+                signalColor: '#493c8b',
+                signalTextColor: '#1A1A1A',
+                
+                sequenceNumberColor: '#ffffff'
+            }
+        });
+    </script>
 </body>
 </html>

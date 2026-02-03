@@ -9,6 +9,7 @@ Todas las modificaciones notables a este proyecto serán documentadas en este ar
 
 ### Modificado (Global)
 - **Nueva Identidad Visual:** Actualización de la paleta de colores corporativa en todo el sistema (Web y Documentación) utilizando tonos Gigas, Minsk y Lavender Purple.
+- **Visualización de Procesos:** Integración de diagramas de Mermaid.js en el portal de documentación HTML para mostrar de manera visual el Mapa de Procesos, diagramas de secuencia y flujos de datos.
 
 ### Corregido (Frontend)
 - **NuevaHoja.tsx:** Se corrigió un error de importación que causaba una pantalla en blanco (ReferenceError: Badge is not defined) al intentar buscar lotes.
