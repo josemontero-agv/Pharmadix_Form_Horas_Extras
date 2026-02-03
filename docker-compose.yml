@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Base de Datos PostgreSQL
+  database:
+    image: postgres:15-alpine
+    container_name: pharmadix-db
+    restart: always
+    environment:
+      POSTGRES_USER: pharmadix_user
+      POSTGRES_PASSWORD: pharmadix_password
+      POSTGRES_DB: pharmadix_times
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - pharmadix-network
+
+  # Backend API (Node.js/Fastify)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pharmadix-backend
+    restart: always
+    environment:
+      DATABASE_URL: "postgresql://pharmadix_user:pharmadix_password@database:5432/pharmadix_times?schema=public"
+      JWT_SECRET: "your_secret_key_here"
+      PORT: 3000
+    depends_on:
+      - database
+    ports:
+      - "3000:3000"
+    networks:
+      - pharmadix-network
+
+  # Frontend PWA (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pharmadix-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - pharmadix-network
+
+networks:
+  pharmadix-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
